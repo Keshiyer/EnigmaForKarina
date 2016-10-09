@@ -40,6 +40,7 @@ class Permutation {
     /** Return the result of applying this permutation to P modulo the
      *  alphabet size. */
     int permute(int p) {
+        p = p % size();
         char nextChar = permute(_alphabet.toChar(p));
         return _alphabet.toInt(nextChar);
     }
@@ -47,6 +48,7 @@ class Permutation {
     /** Return the result of applying the inverse of this permutation
      *  to  C modulo the alphabet size. */
     int invert(int c) {
+        c = c % size();
         char nextChar = invert(_alphabet.toChar(c));
         return _alphabet.toInt(nextChar);
     }

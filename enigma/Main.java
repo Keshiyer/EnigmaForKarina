@@ -79,9 +79,10 @@ public final class Main {
      *  results to _output. */
     private void process() {
         Machine M = readConfig();
-
-        String settings = _input.nextLine().substring(1);
+        String settings = _input.nextLine().substring(1).trim();
         setUp(M, settings);
+        String input = _input.nextLine().trim();
+        String output = M.convert(input);
     }
 
     /** Return an Enigma machine configured from the contents of configuration
@@ -94,13 +95,13 @@ public final class Main {
             _numRotors = _config.nextInt();
             _pawls = _config.nextInt();
 
-            List<Rotor> allRotors = new ArrayList<Rotor>();
+            List<Rotor> _allRotors = new ArrayList<Rotor>();
 
-            while(_config.hasNextLine()) { // TODO: Fix this
-                allRotors.add(readRotor());
+            while(_config.hasNextLine()) {
+                _allRotors.add(readRotor());
             }
 
-            return new Machine(_alphabet, _numRotors, _pawls, allRotors);
+            return new Machine(_alphabet, _numRotors, _pawls, _allRotors);
         } catch (NoSuchElementException excp) {
             throw error("configuration file truncated");
         }
@@ -140,19 +141,21 @@ public final class Main {
      *  which must have the format specified in the assignment. */
     private void setUp(Machine M, String settings) {
         Scanner scan = new Scanner(settings);
+        System.out.println(settings);
         String[] rotors = new String[_numRotors];
-
         for (int i = 0; i < _numRotors; i++) {
             rotors[i] = scan.next();
+            System.out.println(rotors[i]);
         }
-
         M.insertRotors(rotors);
+
         M.setRotors(scan.next());
 
-        String plugboard_pairs = scan.nextLine().trim();
-
-        Permutation perm = new Permutation(plugboard_pairs, _alphabet);
-        M.setPlugboard(perm);
+        if (_config.hasNextLine()) {
+            String plugboard_pairs = scan.nextLine().trim();
+            Permutation perm = new Permutation(plugboard_pairs, _alphabet);
+            M.setPlugboard(perm);
+        }
     }
 
     /** Print MSG in groups of five (except that the last group may
@@ -183,6 +186,10 @@ public final class Main {
 
     /** File for encoded/decoded messages. */
     private PrintStream _output;
+
+    /** Source of information to set up M. */
+    private Scanner scan;
+
 
     /** The number of rotor slots I have. */
     private int _numRotors;

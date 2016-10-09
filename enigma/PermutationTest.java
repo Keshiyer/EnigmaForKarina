@@ -50,7 +50,7 @@ public class PermutationTest {
     }
 
     @Test
-    public void testPermute() {
+    public void testPermuteInt() {
       Permutation perm = new Permutation("(AELTPHQXRU) (BKNW) (CMOY) (DFG) (IV) (JZ) (S)", UPPER);
       assertEquals(4, perm.permute(0));
       assertEquals(0, perm.permute(20));
@@ -66,7 +66,7 @@ public class PermutationTest {
     }
 
     @Test
-    public void testInvert() {
+    public void testInvertInt() {
       Permutation perm = new Permutation("(AELTPHQXRU) (BKNW) (CMOY) (DFG) (IV) (JZ) (S)", UPPER);
       assertEquals(0, perm.invert(4));
       assertEquals(20, perm.invert(0));
@@ -81,11 +81,9 @@ public class PermutationTest {
       assertEquals('S', perm.invert('S'));
     }
 
-
-
-
-
-
-
-
+    @Test
+    public void testDerangement() {
+      Permutation perm = new Permutation("(AELTPHQXRU) (BKNW) (CMOY) (DFG) (IV) (JZ) (S)", UPPER);
+      assertEquals(false, perm.derangement());
+    }
 }

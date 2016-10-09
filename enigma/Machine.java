@@ -68,13 +68,14 @@ class Machine {
      *  the machine. */
     int convert(int c) {
       machineRotors[_numRotors - 1].advance();
-      boolean[] advance = null;
+      boolean[] advance = new boolean[_numRotors];
       for (int i = _numRotors - 1; i > 1; i--) {
         if (machineRotors[i].atNotch()) {
           advance[i-1] = true;
+          advance[i] = true;
         }
       }
-      for (int i = 1; i < _numRotors - 1; i++) {
+      for (int i = 0; i < _numRotors - 1; i++) {
         if (advance == null) {
           break;
         } else if (advance[i]) {
@@ -83,15 +84,18 @@ class Machine {
       }
 
       int result = c;
-
-      //_plugboard.permute(result);
+      if (_plugboard != null) {
+        result = _plugboard.permute(result);
+      }
       for (int i = _numRotors - 1; i >= 0; i--) {
         result = machineRotors[i].convertForward(result);
       }
       for (int i = 1; i < _numRotors; i++) {
         result = machineRotors[i].convertBackward(result);
       }
-      //_plugboard.permute(result);
+      if (_plugboard != null) {
+        result = _plugboard.permute(result);
+      }
       return result;
     }
 

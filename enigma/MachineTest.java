@@ -33,7 +33,7 @@ public class MachineTest {
       mach.insertRotors(rotors);
       mach.setRotors(setting);
       mach.setPlugboard(new Permutation("(YF) (HZ)", az));
-      assertEquals(7, mach.convert(5));
+      assertEquals(25, mach.convert(24));
     }
 
     @Test
@@ -53,5 +53,4 @@ public class MachineTest {
       mach.setPlugboard(new Permutation("(HQ) (EX) (IP) (TR) (BY)", az));
       assertEquals("QVPQSOKOILPUBKJZPISFXDW", mach.convert("FROMHISSHOULDERHIAWATHA"));
       }
-
 }
